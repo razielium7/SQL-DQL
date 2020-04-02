@@ -11,7 +11,7 @@ El comando SELECT permite recuperar los datos desde una o varias tablas.
 Los datos a recuperar se escriben a la derecha del SELECT, separados por comas:
 
     SELECT att1, att2, att3
-    FROM tabla1
+    FROM tabla1;
 
 Utilizaremos las tablas class y teacher.
 
@@ -36,19 +36,19 @@ teacher
 
 
     SELECT id,name, email, classroom
-    FROM class
+    FROM class;
 
 En este ejemplo recuperaremos los id’s, nombres, correos y aulas de los alumnos de la tabla class, creando cuatro columnas y tantas tuplas como alumnos haya.
 
 En caso de desconocer los nombres de los atributos a recuperar podríamos usar:
 
     SELECT *
-    FROM class
+    FROM class;
 De esta forma se recuperarían todos los atributos que tiene la tabla class.
 A mayores, SELECT acepta expresiones matemáticas, como por ejemplo:
 
     SELECT PIB/poblacion
-    FROM pais
+    FROM pais;
 Obtendriamos una columna con PIB por cabeza de habitante de un pais (en una tabla suspuesta que contiene tales datos).
 
 
@@ -58,14 +58,14 @@ Obtendriamos una columna con PIB por cabeza de habitante de un pais (en una tabl
 El comando DISTINCT permite acomodar la visualización, reduciendo las entradas con valores repetidos a una sola entrada.
 
     SELECT classroom
-    FROM class
+    FROM class;
 
 Si consultamos aulas en la tabla class, nos saldrían todas las entradas que contienen algún valor y, obviamente, estarán repetidos.
 
 Sin embargo usando DISTINCT rescataremos solo las entradas que tienen un valor único, los duplicados no se mostrarán.
 
     SELECT DISTINCT classroom
-    FROM class
+    FROM class;
 
 ----------
 
@@ -81,7 +81,7 @@ Para qué SELECT pueda actuar debemos indicarle la tabla sobre la cual queremos 
  Sin embargo sí que es necesario posicionar los comandos de forma correcta para que el motor SQL los pueda procesar.
 
     SELECT att1, att2
-    FROM <tabla que queremos precisar>
+    FROM <tabla que queremos precisar>;
 
 ----------
 
@@ -95,7 +95,7 @@ Debemos indicar el atributo sobre el cual queremos operar, una condición para s
 
     SELECT id,name, email, classroom
     FROM class
-    WHERE name = ‘Victoria’
+    WHERE name = ‘Victoria’;
 Hemos agregado un predicado, condicionando devolver sólo aquellas entradas donde el atributo name sea idéntico a Victoria.
 
 Existen varias formas de comparar el valor: **<**,  **>**,  **=**,  **<>**,  **LIKE**, **NOT LIKE** 
@@ -104,7 +104,7 @@ En caso de LIKE podemos hacer una comparación parcial usando patrones.
 
     SELECT id,name, email, classroom
     FROM class
-    WHERE name LIKE ‘Vic%’
+    WHERE name LIKE ‘Vic%’;
 Ésta consulta devolverá todas las tuplas donde el nombre empiece por Vic, incluyendo Victoria, Victor, Vicky etc.
 
 Cuando comparamos por “mayor igual que” o “menor igual que”  los escribiremos de la siguiente forma **<=** y **>=**.
@@ -119,7 +119,7 @@ AND, junto con OR, completan el predicado, permitiendo especificar más atributo
     SELECT id,name, email, classroom
     FROM class
     WHERE name LIKE ‘Vic%’
-    AND classroom LIKE ‘12B’
+    AND classroom LIKE ‘12B’;
 Recuperaremos aquellas tuplas que cumplan con ambas condiciones, que nombre empiece por Vic y pertenezca al aula 12B
 
 ----------
@@ -134,7 +134,7 @@ Para estos casos tenemos otra forma de aplicar el predicado, definiendo una seri
 
     SELECT id,name, email, classroom
     FROM class
-    WHERE name IN (‘Jose’, ‘Alba’, ‘Richard’)
+    WHERE name IN (‘Jose’, ‘Alba’, ‘Richard’);
 
 Cuando la lista de valores esté generada por una subconsulta colocaremos dicha subconsulta entre paréntesis
 
@@ -143,12 +143,12 @@ Cuando la lista de valores esté generada por una subconsulta colocaremos dicha 
 
     SELECT id,name, email, classroom
     FROM class
-    WHERE name IN (<SUBCONSULTA>)
+    WHERE name IN (<SUBCONSULTA>);
     
 Otra forma de usar IN es posicionarlo en select, generando una nueva columna que pondrá 1 cuando el valor coincide y 0 cuando no.
 
     SELECT id,name, email, classroom IN (‘7B’, ‘2A’)
-    FROM class
+    FROM class;
 De esta forma podremos ordenar los resultados de forma más flexible.
 
 ----------
@@ -161,7 +161,7 @@ Para modificarlo podemos agregar un parámetro según cual estarán ordenados lo
 
     SELECT id,name, email, classroom
     FROM class
-    ORDER BY  name DESC
+    ORDER BY  name DESC;
 De esta forma la lista estará ordenada por los nombres de los alumnos de Z a A.
 Podemos definir varios atributos, separados por comas, para precisar la orden todavía más. 
  
@@ -172,7 +172,7 @@ Podemos definir varios atributos, separados por comas, para precisar la orden to
 Mostrar los resultados de la forma que están almacenados en la base de datos puede no ser suficiente para su entendimiento. En algunos casos precisamos renombrar las columnas para un mejor entendimiento.
 
     SELECT poblacion/area AS DensidadPoblacion
-    FROM pais
+    FROM pais;
 Como resultado, la columna poblacion/area se renombrará a DensidadPoblacion
 El comando AS también se usará para nombrar consultas.
 
@@ -183,7 +183,7 @@ El comando AS también se usará para nombrar consultas.
 Introducimos un nuevo miembro de SELECT. Nos permite combinar valores de strings de diferentes atributos en un atributo nuevo.
 
     SELECT CONCAT(name,age)
-    FROM class
+    FROM class;
 Devolverá nombre y edad en la misma celda: Maria25, Victor 21, Jose30 etc.
 
 ----------
@@ -195,6 +195,7 @@ Entre paréntesis se indican el atributo a operar, parte a modificar, contenido 
     
     SELECT name,
     	REPLACE (‘name’, ‘a’, ‘i’)
+    FROM class;
 En vez de “Maria, Carlos, Marta” devolverá “Mirii, Cirlos, Mirti”
 
 
@@ -207,7 +208,7 @@ El comando opera sobre el atributo, por lo tanto se posiciona dentro de SELECT.
 Entre paréntesis se pondrá el atributo, número de dígitos a redondear con el signo correspondiente que definirá el lado del redondeo.
 
     SELECT ROUND(PIB/poblacion,3)
-    FROM pais
+    FROM pais;
 Devolverá el número redondeado a tres dígitos después del punto.
 
 
@@ -218,7 +219,7 @@ Devolverá el número redondeado a tres dígitos después del punto.
 Operando sobre valores numéricos podemos obtener sus sumas totales y promedios. Para consultar la suma de la edad total de alumnos pondremos SUM(att1) dentro de SELECT.
 
     SELECT SUM(age)
-    FROM class
+    FROM class;
 Nos devolverá una sola tupla con la suma de todas las edades.
 Lo mismo sucede con AVG, pero en vez de suma obtendríamos la media total.
 
@@ -229,7 +230,7 @@ group by
 
     SELECT COUNT(name), classroom
     FROM class
-    GROUP BY classroom
+    GROUP BY classroom;
 Ésta consulta recuperará el número de alumnos agrupado por aulas.
 
 ----------
@@ -242,13 +243,13 @@ Los parámetros del predicado se escribían en WHERE, es lo que hemos aprendido 
     SELECT COUNT(name), classroom
     FROM class
     GROUP BY classroom
-    WHERE COUNT(name) >= 20
+    WHERE COUNT(name) >= 20;
 Ésta consulta no se ejecutaría.
 
     SELECT COUNT(name), classroom
     FROM class
     GROUP BY classroom
-    HAVING COUNT(name) >= 20
+    HAVING COUNT(name) >= 20;
 Ésta devolverá el número de alumnos por aula de aquellas aulas que cuentan con 20 o más alumnos.
 
 
@@ -262,7 +263,7 @@ Las subconsultas nos permiten comparar valores de tablas diferentes o condiciona
     FROM class
     WHERE age >=  ALL(SELECT age
     FROM class
-    WHERE classroom LIKE ‘4A’)
+    WHERE classroom LIKE ‘4A’);
 Tal consulta rescatará los nombres de aquellos alumnos que sean mayores que cualquier alumno de la clase 4A. En primer lugar se ejecutará la subconsulta, generando todas las edades de la clase 4A, el comando ALL fuera de la subconsulta define que se comparará con el valor más grande de los consultados.
 En el predicado la subconsulta se coloca a la derecha.
 
@@ -271,7 +272,7 @@ En el predicado la subconsulta se coloca a la derecha.
     FROM class AS x
     WHERE age >=  ALL(SELECT age
     FROM class AS y
-    WHERE x.classroom = y.classroom)
+    WHERE x.classroom = y.classroom);
 
 La consulta devuelve los nombres de aquellos alumnos que más edad tienen **dentro de su propia clase**. Utilizamos AS para nombrar a las consultas (definir un Alias) y la expresión alias1.atributo1 = alias2.atributo1 para indicar que comparamos un mismo atributo pero de consultas diferentes.
 
@@ -284,14 +285,14 @@ Si queremos consultar una serie de datos de una tabla y evitar valores nulos pon
     SELECT name, email, mentor
     FROM class 
     WHERE age >= 18
-    AND mentor IS NOT NULL
+    AND mentor IS NOT NULL;
 
 Devuelve la lista de alumnos mayores de 18 y con tutor asignado, aquellos alumnos que carecen de tutor no aparecerá en la lista.
 Existe la posibilidad inversa, por ejemplo necesitamos saber qué alumnos no tienen un tutor asignado.
 
     SELECT name, mentor
     FROM class 
-    WHERE mentor IS NULL
+    WHERE mentor IS NULL;
 
 
 ----------
@@ -302,7 +303,7 @@ COALESCE es otro comando para tratar con los NULL.
 Para sustituir los NULL por un valor definido por el usuario usaremos este comando de la siguiente forma:
 
     SELECT name, COALESCE(mentor, ‘NoAsignado’)
-    FROM class
+    FROM class;
 Devuelve la lista de todos los alumnos, aquellos que no tengan un tutor asignado tendrán puesto NoAsignado en el campo del atributo.
 
 ----------
@@ -338,12 +339,12 @@ Existe una serie de comandos JOIN:
 
 
     SELECT name, mentor, phone
-    FROM class
+    FROM class;
 Ésta consulta no se ejecutaría, porque “phone”, el teléfono del tutor está en la otra tabla.
 Si queremos consultar los nombres de alumnos, sus tutores y los teléfonos de estos tutores, necesitamos juntar de tablas en una gran tabla única usando un JOIN
 
     SELECT name, mentor, phone
-    FROM class JOIN teacher on teacher.id = class.mentor
+    FROM class JOIN teacher on teacher.id = class.mentor;
 Hemos establecido un JOIN equiparando los atributos de la clave principal y la clave ajena.
 De esta forma podemos consultar atributos de varias tablas, uniendolas con el JOIN adecuado.
 
@@ -353,7 +354,7 @@ Para aquellos motores que no soportan el comando ON pasaríamos las claves a otr
 
     SELECT name, mentor, phone
     FROM class JOIN teacher 
-    WHERE  teacher.id = class.mentor
+    WHERE  teacher.id = class.mentor;
 Ésta consulta es idéntica a la anterior.
 
 #### RIGHT/LEFT ####
@@ -361,7 +362,7 @@ En el JOIN (AKA INNER JOIN) sólo aparecerán las tuplas donde el valor del atri
 Si deseamos consultar la totalidad de alumnos, independientemente de si tienen un tutor o no, tenemos que usar LEFT JOIN o RIGHT JOIN.
 
     SELECT name, mentor, phone
-    FROM class LEFT JOIN teacher on teacher.id = class.mentor
+    FROM class LEFT JOIN teacher on teacher.id = class.mentor;
 
 En esta consulta observaremos los nombres de todos los alumnos, sus tutores y los teléfonos de los tutores. A diferencia del INNER JOIN, también aparecerán las tuplas de alumnos que no tienen un mentor asignado.
 
@@ -421,4 +422,4 @@ Finalmente obtenemos la solución:
     		FROM casting
     		JOIN actor ON actorid = actor.id
     		WHERE actor.name LIKE 'Sigourney Weaver')
-      AND name NOT LIKE 'Sigourney Weaver
+      AND name NOT LIKE 'Sigourney Weaver;
